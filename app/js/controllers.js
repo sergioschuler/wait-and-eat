@@ -12,12 +12,12 @@ angular.module('myApp.controllers', [])
 		$scope.parties = $firebase(partiesRef);
 
 		// Object to store data from waitlist form.
-		$scope.newParty = {name: '', phone: '', size: '', done: false};
+		$scope.newParty = {name: '', phone: '', size: '', done: false, notified: 'No'};
 
 		// Function to save a new party to the waitlist.
 		$scope.saveParty = function() {
 			$scope.parties.$add($scope.newParty);
-			$scope.newParty = {name: '', phone: '', size: '', done: false};
+			$scope.newParty = {name: '', phone: '', size: '', done: false, notified: 'No'};
 		};
 
 		// Function to send a text message to a party
@@ -30,5 +30,7 @@ angular.module('myApp.controllers', [])
 				name: party.name 
 			};
 			textMessages.$add(newTextMessage);
+			party.notified = "Yes"
+			$scope.parties.$save(party.$id);
 		};
 	}]);

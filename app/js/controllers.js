@@ -33,4 +33,16 @@ angular.module('myApp.controllers', [])
 			party.notified = "Yes"
 			$scope.parties.$save(party.$id);
 		};
+	}])
+	.controller('AuthController', ['$scope', '$firebaseSimpleLogin', function($scope, $firebaseSimpleLogin) {
+		var authRef = new Firebase('https://waitandeat-sergio.firebaseio.com/textMessages');
+		var auth = $firebaseSimpleLogin(authRef);
+
+		$scope.user = {email: '', password: ''}
+
+		$scope.register = function() {
+			auth.$createUser($scope.user.email, $scope.user.password).then(function(data) {
+				console.log(data);
+			});
+		}
 	}]);
